@@ -8,144 +8,100 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>登陆</title>
     <link rel="stylesheet" type="text/css" href="./css/api.css"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <style>
-        body {
-            background-color: #FFFFFF;
+        body{
+            width: 100%;
+            height: 100%;
         }
-
-        .aui-bar-primary {
-            background-color: #FFFFFF;
-            color: #000000;
-            font-size: 14px;
+        #eat{
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 50px;
+            margin-left: -50px;
+            margin-top: -25px;
+            font-size: 1.2em;
         }
-
-        .aui-bar .aui-iconfont {
-            position: relative;
-            z-index: 20;
-            font-size: 20px;
-            color: #000000;
-            font-size: 400;
-            line-height: 45px;
+        #menu{
+            font-size: 2em;
         }
-
-        .form {
-            width: 280px;
-            margin: auto;
-            margin-top: 60px;
+        #anim{
+            display: none;
         }
-
-        .aui-btn-rows {
-            position: 0;
-            text-align: center;
-            padding: 0px;
+        #anim img{
+            height: 100%;
+            width: 100%;
+            margin-top: 200px;
         }
-
-        .aui-input-addons {
-            float: right;
-            font-size: 14px;
-            margin-top: 20px;
-            color: #555555;
-        }
-
-        .aui-input-left {
-            float: left;
-            font-size: 14px;
-            margin-top: 20px;
-            color: #555555;
-        }
-
-        .aui-btn-primary {
-            line-height: 50px;
-            border-radius: 25px;
-            margin-top: 40px;
+        #myModal{
+            position: absolute;
+            top:30%;
         }
     </style>
 </head>
 <body>
-<header class="aui-bar aui-bar-nav aui-bar-primary" id="header">
-    <a class="aui-pull-left"> <span class="aui-iconfont aui-icon-left" onClick="gb()"></span> </a>
-    <div class="aui-title">
-        登录
-    </div>
-</header>
-<div class="form">
-    <div class="aui-content aui-margin-b-15">
-        <ul class="aui-list aui-form-list">
-            <li class="aui-list-item">
-                <div class="aui-list-item-inner">
-                    <div class="aui-list-item-label-icon">
-                        <i class="aui-iconfont aui-icon-mobile"></i>
-                    </div>
-                    <div class="aui-list-item-input">
-                        <input type="text" id="username" placeholder="username">
-                    </div>
-                </div>
-            </li>
-            <li class="aui-list-item">
-                <div class="aui-list-item-inner">
-                    <div class="aui-list-item-label-icon">
-                        <i class="aui-iconfont aui-icon-lock"></i>
-                    </div>
-                    <div class="aui-list-item-input">
-                        <input type="password" id="password" placeholder="password">
-                    </div>
-                    <div class="aui-list-item-label-icon">
-                        <i class="aui-iconfont aui-icon-display"></i>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="aui-btn-rows" onclick="login()">
-        <div class="aui-btn aui-btn-primary aui-btn-block">
-            登 陆
-        </div>
-    </div>
-    <div class="aui-btn-rows">
-        <span class="aui-input-left" onClick="register()">快速注册</span>
-        <span class="aui-input-addons" onClick="zhmm()">忘记密码？</span>
-    </div>
-</div>
+<button type="button" class="btn btn-primary" data-toggle="modal"  id="eat">Click me!</button>
+<div id="anim"><img src="./image/choujiang.gif"></div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">今天吃</h4>
+            </div>
+            <div class="modal-body">
+                <p id="menu"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="change">换一个</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<p></p>
+<script src='./script/jQuery/jquery-2.2.3.min.js'></script>
+<script src='./script/bootstrap.min.js'></script>
+<script src='./script/jQueryUI/jquery-ui.min.js'></script>
+<script>
+    (function () {
+        var all = ['炒菜','黄焖鸡','冒菜','板烧','面条',];
+        $('#eat').on('click',function () {
+            $('#myModal').modal('hide');
+            $('#anim').show();
+            $('#eat').hide();
+            setTimeout(function () {
+                $('#anim').hide();
+                $('#myModal').modal('show');
+                $('#eat').show();
+            },1500);
+            $('#change').show();
+            var today = all.concat();
+            var index = Math.floor(Math.random() * today.length);
+            var menu = today[index];
+            $('#menu').text(menu);
+            today.splice(index,1);
+            $('#change').on('click',function () {
+                $('#change').show();
+                var i = Math.floor(Math.random() * today.length);
+                var menu = today[i];
+                if (today.length > 0) {
+                    $('#menu').text(menu);
+                    today.splice(i,1);
+                }else{
+                    $('#menu').text("啥都不吃，回去干活吧");
+                    $('#change').hide();
+                }
+            });
+        });
+    })();
+</script>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript" src="./script/xcom.js"></script>
 <script type="text/javascript">
-    apiready = function () {
-        api.parseTapmode();
-        var header = $api.byId('header');
-        $api.fixStatusBar(header);
-        var headerPos = $api.offset(header);
-        var body_h = $api.offset($api.dom('body')).h;
-    }
-    function gb() {
-        api.closeWin();
-    }
-
-    //注册账号
-    function register() {
-        api.openWin({
-            name: 'zhmm',
-            url: './html/register.html',
-            animation: {
-                type: "push", //动画类型（详见动画类型常量）
-                duration: 400 //动画过渡时间，默认300毫秒
-            }
-        });
-    }
-
-    //找回密码
-    function zhmm() {
-        api.openWin({
-            name: 'zhmm',
-            url: './html/pwd_back.html',
-            animation: {
-                type: "push", //动画类型（详见动画类型常量）
-                duration: 400 //动画过渡时间，默认300毫秒
-            }
-        });
-    }
-
-
 
 
 </script>
